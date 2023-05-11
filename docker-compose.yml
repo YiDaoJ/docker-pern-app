@@ -1,0 +1,26 @@
+version: '2'
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: pern_client
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/app
+      - /app/node_modules #hot-reload
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: pern_server
+    ports:
+      - 3050:3050
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+# volumes:
+#   ignore:
+
