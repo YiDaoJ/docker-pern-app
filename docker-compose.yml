@@ -17,6 +17,10 @@ services:
     container_name: pern_server
     ports:
       - 3050:3050
+    environment:
+      DB_HOST: host.docker.internal # ref: https://stackoverflow.com/a/55449975
+      DB_USER: postgres
+      DB_PASS: mysecretpassword
     # networks:
     #   - pern-app
     # depends_on:
@@ -24,24 +28,24 @@ services:
     volumes:
       - ./server:/app
       - /app/node_modules
-
-  # db:
-  #   image: postgres:15.2-alpine
-  #   container_name: pern_db_postgres
-  #   ports:
-  #     - '5432:5432'
-  #   networks:
-  #     - pern-app
-  #   volumes:
-  #     - data:/data/db
-  #   environment:
-  #     - POSTGRES_PASSWORD=mysecretpassword
-  #     - POSTGRES_DB=perntodo
+  db:
+    image: postgres:15.2-alpine
+    container_name: pern_db_postgres
+    ports:
+      - '5432:5432'
+    # networks:
+    #   - pern-app
+    volumes:
+      - data:/data/db
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: perntodo
+      POSTGRES_USER: postgres
 
 # networks:
 #   pern-app:
 #     driver: bridge
 
-# volumes:
-#   data: {}
+volumes:
+  data: {}
 
